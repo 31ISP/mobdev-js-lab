@@ -1,4 +1,4 @@
-//задание 1
+//раздел 1 числа
 
 //1.
 const temperature = 36.6789
@@ -27,7 +27,7 @@ console.log(isNaN("сто" / 5))
 console.log(Math.min(14, -3, 77, 0, -100, 42))
 console.log(Math.max(14, -3, 77, 0, -100, 42))
 
-//задание 2
+//раздел 2 строки
 
 //1.
 
@@ -65,6 +65,107 @@ const FT = "42"
 const Zer = "0".repeat(6)
 const res = Zer + FT
 console.log(res)
+
+//Раздел 3 массивы
+
+//1.
+const score = [4, 5, 3, 5, 2, 4, 5, 3]
+const leight = score.length
+const score1 = score.reduce((acc, n) => acc + n, 0)
+const score2 = score1 / leight
+const score3 = score2.toFixed(2)
+console.log(score3)
+
+//2.
+const score4 = score.filter(n => n > 3)
+const score5 = score4.map(n => n = 5)
+console.log(score5)
+
+//3.
+const str = ["банан", "яблоко", "вишня", "абрикос", "груша"]
+const str2 = str.sort()
+console.log(str2.join(", "))
+
+//4.
+const products = [
+      { name: "Ноутбук", price: 75000 },
+      { name: "Мышь", price: 1500 },
+      { name: "Монитор", price: 32000 },
+      { name: "Клавиатура", price: 3500 },
+      { name: "Наушники", price: 8000 }
+    ]
+const products1 = products.filter(n => n.price < 10000)
+console.log(products1)
+const products2 = products.map(n => n.name)
+console.log(products2)
+console.log(products.reduce((acc, n ) => acc + n.price, 0))
+
+//5.
+const msv = [12, 45, 7, 33, 18]
+console.log(msv.some(n => n > 40))
+console.log(msv.every(n=>n>5))
+
+//раздел 4 объекты
+
+//1.
+const book = {title: "«Мастер и Маргарита»", 
+    author: "Булгаков М.А.", 
+    year: "1967 г.", 
+    pages: "480 стр.",
+    available: true}
+book.info = function() {
+    return `${this.title}, ${this.author}, ${this.year}, ${this.pages}`
+
+} 
+console.log(book.info())
+
+//2.
+const { title, author, rating = 0} = book
+console.log(title + ", " + author + ": " + rating)
+
+//3.
+const studentsT = [
+      { name: "Анна", grade: 4.8, passed: true },
+      { name: "Борис", grade: 2.9, passed: false },
+      { name: "Вера", grade: 3.5, passed: true },
+      { name: "Григорий", grade: 4.1, passed: true },
+      { name: "Дарья", grade: 2.5, passed: false },
+    ]
+const studentsT1 = studentsT.filter(n => n.passed)
+const stT2 = studentsT1.map(n => n.name)
+const stT3 = studentsT.find(n => n.grade > 4.5)
+const AvSc = studentsT.reduce((acc, n)=> acc + n.grade, 0)
+console.log(stT2)
+console.log(stT3.name)
+console.log(AvSc)
+
+//4.
+
+function mergeUsers(users1, users2){
+    return {...users1, ...users2}
+}
+const u1 = { name: "Иван", age: 20, city: "Казань" }
+const u2 = { name: "Иван Петров", email: "ivan@mail.ru", city: "Москва" }
+
+console.log(mergeUsers(u1, u2))
+
+//5.
+
+function countByField(arr, field){
+const counter = {}
+arr.forEach(element => {
+    const value = element[field]
+    if (counter[value] === undefined) {
+    counter[value] = 1;   
+} else {
+    counter[value]++;     
+}
+
+});
+return counter;
+}
+
+console.log(countByField(studentsT, "passed"));
 
 //console.log(isNaN("1202" / 2))
 //console.log(isNaN("hello" / 5))

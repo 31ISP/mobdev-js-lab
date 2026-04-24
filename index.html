@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Мое приложение на Git</h1>
+    <p>Это тестовый контент для страницы.</p>
+    <footer>Торгашина Софья 2026</footer>
+</body>
+</html>
+
+
+index.js
+async function fetchData() {
+    const data = await fetch('https://kitek.ktkv.dev/static/spotify.json')
+    const json =  await data.json()
+ return json
+}
+
+function formatDuration(ms) {
+    const minutes = Math.floor(ms / 60000)
+    const seconds = ((ms % 60000) / 1000).toFixed(0)
+    return `${minutes}:${seconds.padStart(2, '0')}`
+}
+function formatTotalDuration(ms) {
+    const totalMinutes = Math.floor(ms / 60000)
+    const hours = Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+    
+    if (hours > 0) {
+        return `${hours} ч ${minutes} мин`
+    } else {
+        return `${minutes} мин`
+    }
+}
+
+fetchData().then(tracks => {
+    const container = document.querySelector('#tracksContainer')
+    const statsContainer = document.querySelector('#statsContainer')
+    const totalTracks = tracks.length
+    const totalDurationMs = tracks.reduce((sum, item) => sum + item.track.duration_ms, 0)
+    
+    statsContainer.innerHTML = `
+        <div class="stat-card">
+            <div>Треков: ${totalTracks}</div>
+            <div>Общая длительность: ${formatTotalDuration(totalDurationMs)}</div>
+        </div>
+    `
+    const itemsHtml = tracks.map((item, index) => {
+        const track = item.track
+        const artistNames = track.artists.map(a => a.name).join(', ')
+        const imageUrl = track.album.images[2]?.url || ''
+        return `
+<li class="track-item">
+    <div class="track-number">${index + 1}</div>
+    <div class="track-main">
+        <img
+            src="${imageUrl}"
+            alt="${track.name}"
+            class="album-art"
+            loading="lazy" />
+        <div class="track-info">
+            <div class="track-name">${track.name}</div>
+            <div class="track-artists">${artistNames}</div>
+            <div class="track-album">${track.album.name}</div>
+        </div>
+    </div>
+    <div class="track-meta">
+        <div class="duration">${formatDuration(track.duration_ms)}</div>
+        <div class="popularity">♪ ${track.popularity}</div>
+    </div>
+</li>`
+    }).join('')
+    container.innerHTML = itemsHtml
+})
+
+
+
+
+
+
+
 
